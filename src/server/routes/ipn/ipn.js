@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const Promise = require('bluebird');
 const flat = require('flat');
 const parseReqBody = require('./shared.js').parseReqBody;
+const normalizeOrderId = require('./orderIdTools').normalizeOrderId;
 
 const CUSTOMER_SUBJECT = 'Your shiny new download';
 const DOWNLOAD_INSTRUCTIONS_TEXT = require('./downloadInfo').text;
@@ -234,52 +235,3 @@ router.post('/paypal', function (req, res) {
 });
 
 module.exports = router;
-
-function normalizeOrderId(data, orderOnly) {
-
-  var orderNumber;
-  if (data.AmazonOrderReferenceId) {
-    orderNumber = data.AmazonOrderReferenceId;
-    console.log('normalizeOrderId extracted from data.AmazonOrderReferenceId', orderNumber);
-  } else if (data.NotificationData && data.NotificationData.AmazonOrderReferenceId) {
-    orderNumber = data.NotificationData.AmazonOrderReferenceId;
-    console.log('normalizeOrderId extracted from data.AmazonOrderReferenceId', orderNumber);
-  } else if (data.NotificationData && data.NotificationData.AmazonRefundId) {
-    orderNumber = data.NotificationData.AmazonRefundId;
-    console.log('normalizeOrderId extracted from data.NotificationData.AmazonRefundId', orderNumber);
-  } else if (data.NotificationData && data.NotificationData.AmazonAuthorizationId) {
-    orderNumber = data.NotificationData.AmazonAuthorizationId;
-    console.log('normalizeOrderId extracted from data.NotificationData.AmazonAuthorizationId', orderNumber);
-  } else if (data.NotificationData && data.NotificationData.AmazonCaptureId) {
-    orderNumber = data.NotificationData.AmazonCaptureId;
-    console.log('normalizeOrderId extracted from data.NotificationData.AmazonCaptureId', orderNumber);
-  } else if (data.OrderReferenceDetails && data.OrderReferenceDetails.AmazonOrderReferenceId) {
-    orderNumber = data.OrderReferenceDetails.AmazonOrderReferenceId;
-    console.log('normalizeOrderId extracted from data.OrderReferenceDetails.AmazonOrderReferenceId', orderNumber);
-  } else {
-    console.log('normalizeOrderId failed to find order with data: ', data);
-    return data;
-  }
-
-  console.log('splitOrderId: ', splitOrderId(orderNumber));
-
-  if (orderOnly) {
-    return splitOrderId(orderNumber);
-  } else {
-    return addOrderId(data, orderNumber);
-  }
-}
-
-function addOrderId(data, orderId) {
-  return Object.assign({}, data, {
-    extractedOrderId: splitOrderId(orderId)
-  });
-}
-
-function splitOrderId(data, delimiter = '-', len = 3) {
-  if (data.split(delimiter).length > len) {
-    data = data.split(delimiter);
-    data = data.slice(0, 3).join(delimiter);
-  }
-  return data;
-}

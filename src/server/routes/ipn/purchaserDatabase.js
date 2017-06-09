@@ -109,7 +109,10 @@ module.exports = {
         }
       });
     });
-  }
+  },
+
+  // exporting method for testing
+  addTimeStamp
 };
 
 // generalized for PayPal or Amazon IPN data format

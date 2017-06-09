@@ -1,7 +1,7 @@
 {
-  "name": "lexjacobs-website",
-  "version": "0.1.0",
-  "private": true,
+  "name": "paypal-amazon-ipn-listener-emailer-database-ui",
+  "version": "1.0.0",
+  "private": false,
   "proxy": "http://localhost:8000",
   "dependencies": {
     "amazon-payments": "^0.2.6",

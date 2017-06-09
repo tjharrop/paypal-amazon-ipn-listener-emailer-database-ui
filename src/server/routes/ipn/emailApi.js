@@ -30,7 +30,7 @@ module.exports = ({
     // accepts one or an array of e-mails
     var to = [toEmail];
 
-    // this sends the email
+    // this sends the email via the aws-sdk
     ses.sendEmail({
       Source: fromEmail,
       Destination: {

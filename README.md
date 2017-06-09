@@ -61,6 +61,11 @@ Then fill in .env entries (values should be inside quotation marks, as in `SAMPL
   * `FIREBASE_PROJECT_ID`, from "project_id"
   * `FIREBASE_PRIVATE_KEY_ID`, from "private_key_id"
   * `FIREBASE_PRIVATE_KEY`, from "private_key"
+      * paste in the entire string, such as: 
+    ```
+    FIREBASE_PRIVATE_KEY='-----BEGIN PRIVATE KEY-----\nABCDEF12345 ...(snipped)... FEDCBA54321\n-----END PRIVATE KEY-----\n'
+    ```
+
   * `FIREBASE_CLIENT_EMAIL`, from "client_email"
   * `FIREBASE_CLIENT_ID`, from "client_id"
   * `FIREBASE_DATABASE_URL`, from your firebase project ui: `settings > SERVICE ACCOUNTS` equal to https://[your-project-name].firebaseio.com
@@ -100,13 +105,13 @@ Then fill in .env entries (values should be inside quotation marks, as in `SAMPL
   * take note of the "User UID" of the user you wish to authenticate
 * Under Firebase > Database > Rules:
   * replace default rules with:
-  
+
 ```json
 {
   "rules": {
     ".read": "auth != null && auth.uid === 'user-uid-you-wish-to-authenticate'",
     ".write": "auth != null",
-    
+
     "purchases": {
       ".indexOn": ["unix_timestamp"]
     }
@@ -132,6 +137,18 @@ Then fill in .env entries (values should be inside quotation marks, as in `SAMPL
 * There are separate Amazon Pay production and sandbox views. This project's default endpoint for the Amazon sandbox IPN test is: `https://[your-app-name].herokuapp.com/api/ipn/amazon/sandbox` and the Amazon production IPN endpoint, per this project's default settings is: `https://[your-app-name].herokuapp.com/api/ipn/amazon`
 * You will have to create an Amazon sandbox account, which compared to many things in the AWS universe, is *relatively* easy.
 * For sandbox testing of making a purchase from an Amazon buy-it-now-button, you also create buttons in the Amazon Pay sandbox view.
+
+## Testing PayPal setup locally
+* After you have a successfully validated IPN message from the PayPal IPN simulator, you can send it to the locally running express server with curl to test your local set up. Make sure to set the PayPal IPN simulator `payer_email` field to an email address you control so you can validate that this repo will send you the follow-up email you are expecting. That will probably also involve you setting the `item_name` field to something that will match your `xxx_PRODUCT_NAME_STRING` in `src/server/routes/ipn/ipn.js`.
+  * `$ npm run server`
+  * followed by:
+
+```bash
+curl -H "Content-Type: application/JSON" -X POST -d '{"payment_type": "instant","payment_date": "Sun Apr 1 2017 11:23:45 GMT-0700 (PDT)","payment_status": "Completed","address_status": "confirmed","payer_status": "verified","first_name": "John","last_name": "Smith","payer_email": "my_personal_email@gmail.com","payer_id": "TESTBUYERID01","address_name": "John Smith","address_country": "United States","address_country_code": "US","address_zip": "95131","address_state": "CA","address_city": "San Jose","address_street": "123 any street","business": "seller@paypalsandbox.com","receiver_email": "seller@paypalsandbox.com","receiver_id": "seller@paypalsandbox.com","residence_country": "US","item_name": "My Product Name That Will Trigger Email Success Message","item_number": "AK-1234","quantity": "1","shipping": "3.04","tax": "2.02","mc_currency": "USD","mc_fee": "0.44","mc_gross": "12.34","mc_gross_1": "9.34","txn_type": "web_accept","txn_id": "595189057","notify_version": "2.1","custom": "abc123","invoice": "abc1234","test_ipn": "1","verify_sign": "AFbYYYRCpSSRlAbC123def456HoqQfEQtnRdRji"}' localhost:8000/api/v0/ipn/paypal
+```
+## Method testing with Jest
+`$ npm run test`
+
 ---
 ### That's it!!
 #### Simple!
