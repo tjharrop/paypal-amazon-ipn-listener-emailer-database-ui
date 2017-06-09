@@ -1,0 +1,22 @@
+# postmark transactional email client
+POSTMARK_API_TOKEN=''
+
+# aws ses settings
+AWS_ACCESS_KEY_ID=''
+AWS_SECRET_ACCESS_KEY=''
+AWS_REGION=''
+
+# amazon pay settings
+amz_merchant_id=''
+amz_access_key=''
+amz_client_id=''
+amz_secret_key=''
+
+# firebase service account settings
+FIREBASE_TYPE=''
+FIREBASE_PROJECT_ID=''
+FIREBASE_PRIVATE_KEY_ID=''
+FIREBASE_PRIVATE_KEY=''
+FIREBASE_CLIENT_EMAIL=''
+FIREBASE_CLIENT_ID=''
+FIREBASE_DATABASE_URL=''
