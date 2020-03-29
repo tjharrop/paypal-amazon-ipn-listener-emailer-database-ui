@@ -21,7 +21,7 @@ module.exports = ({
   messageHtml = 'no html message included',
 
   // amazon || postmark
-  sendEngine = 'amazon'
+  sendEngine = 'postmark'
 }) => {
 
 
