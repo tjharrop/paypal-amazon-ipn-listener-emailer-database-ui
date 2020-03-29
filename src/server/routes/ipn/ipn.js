@@ -187,7 +187,7 @@ router.post('/paypal', function (req, res) {
 
         // only send download link if the product name contains the snippet defined above
         // PayPal button must have product name encoded in the 'Item name' field
-        if (data.item_name1 && data.item_name1.indexOf(PAYPAL_PRODUCT_NAME_SNIPPET) >= 0) {
+        if (data.item_name && data.item_name.indexOf(PAYPAL_PRODUCT_NAME_SNIPPET) >= 0) {
 
           // send me an exact copy of the customer download email
           emailApi({
