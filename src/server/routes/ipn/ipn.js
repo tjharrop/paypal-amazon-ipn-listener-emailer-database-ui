@@ -10,7 +10,7 @@ const flat = require('flat');
 const parseReqBody = require('./shared.js').parseReqBody;
 const normalizeOrderId = require('./orderIdTools').normalizeOrderId;
 
-const CUSTOMER_SUBJECT = 'Your shiny new download';
+const CUSTOMER_SUBJECT = 'Get your voucher';
 const DOWNLOAD_INSTRUCTIONS_TEXT = require('./downloadInfo').text;
 const DOWNLOAD_INSTRUCTIONS_HTML = require('./downloadInfo').html;
 const FROM_EMAIL = constants.defaultFromEmail;
@@ -18,8 +18,8 @@ const SUBJECT_FAIL = 'ipn promise chain rejected with: ';
 const IPN_RECEIVED_SUCCESS = 'ipn data received (PayPal)';
 const IPN_RECEIVED_SUCCESS_AMAZON = 'ipn data received (Amazon)';
 const TO_EMAIL = constants.defaultToEmail;
-const PAYPAL_PRODUCT_NAME_SNIPPET = 'Excellent Product';
-const AMAZON_PRODUCT_NAME_SNIPPET = 'Excellent Product';
+const PAYPAL_PRODUCT_NAME_SNIPPET = 'Hospothreads voucher';
+const AMAZON_PRODUCT_NAME_SNIPPET = 'Hospothreads voucher';
 
 var amazonPayments = require('amazon-payments');
 

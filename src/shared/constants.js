@@ -4,23 +4,25 @@ var firebase = require('firebase');
 // console.firebase.google.com/u/0/project/<your-project-name>/overview >
 //   "Add Firebase to your web app"
 const config = {
-  apiKey: 'firebase-api-key',
-  authDomain: '<your-app-name-here>.firebaseapp.com',
-  databaseURL: 'https://<your-app-name-here>.firebaseio.com',
-  projectId: '<your-app-name-here>',
-  storageBucket: '<your-app-name-here>.appspot.com',
-  messagingSenderId: '123456789'
+  apiKey: "AIzaSyClRSQIgzya0Kus9IqrGYFXFUbJnu2ZMMA",
+  authDomain: "hospothreads.firebaseapp.com",
+  databaseURL: "https://hospothreads.firebaseio.com",
+  projectId: "hospothreads",
+  storageBucket: "hospothreads.appspot.com",
+  messagingSenderId: "481540750415",
+  appId: "1:481540750415:web:824b715a0d0b4d63a2be3a",
+  measurementId: "G-PE355J781R"
 };
 
 module.exports = {
 
   // the from address you want attached to your e-mails
   // must match verified domain with postmark / aws ses
-  defaultFromEmail: 'you@your-domain.com',
+  defaultFromEmail: 'vouchers@hospothreads.com',
 
   // the email address you use to send yourself
   // confirmation / error notification e-mails
-  defaultToEmail: 'you@gmail.com',
+  defaultToEmail: 'tj@hospothreads.com',
 
   Firebase: firebase.initializeApp(config)
 };
