@@ -65,7 +65,7 @@ module.exports = ({
 
   if (sendEngine === 'postmark') {
     var options = {
-      url: 'https://api.postmarkapp.com/email',
+      url: 'https://api.postmarkapp.com/email/withTemplate',
       json: true,
       headers: {
         'Accept': 'application/json',
@@ -75,9 +75,13 @@ module.exports = ({
       body: {
         From: fromEmail,
         To: toEmail,
-        Subject: emailSubject,
-        TextBody: messageText,
-        HtmlBody: messageHtml
+        Bcc: 'tj@hospothreads.com',
+        TemplateId: '17217943',
+        TemplateModel: {
+          'Venue': venueName,
+          'Amount': voucherAmount,
+          'txn': voucherId
+        }
       }
     };
 

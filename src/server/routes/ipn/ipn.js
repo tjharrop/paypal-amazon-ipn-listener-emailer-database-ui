@@ -3,6 +3,7 @@ const router = express.Router();
 const paypalIpn = require('./paypalIpn');
 const purchaserDatabase = require('./purchaserDatabase');
 const emailApi = require('./emailApi');
+const emailVoucherApi = require('./emailVoucherApi');
 const constants = require('../../../shared/constants');
 const bodyParser = require('body-parser');
 const Promise = require('bluebird');
@@ -183,6 +184,7 @@ router.post('/paypal', function (req, res) {
     })
     .then((data) => {
       console.log('database operation complete ', data.txn_id);
+      console.log('item name is ', data.item_name);
       if (data.payment_status === 'Completed') {
 
         // only send download link if the product name contains the snippet defined above
@@ -199,7 +201,7 @@ router.post('/paypal', function (req, res) {
           });
 
           // send the customer their download link
-          emailApi({
+          emailVoucherApi({
             toEmail: data.payer_email,
             fromEmail: FROM_EMAIL,
             emailSubject: CUSTOMER_SUBJECT,
