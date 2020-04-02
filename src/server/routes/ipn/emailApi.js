@@ -76,12 +76,11 @@ module.exports = ({
         From: fromEmail,
         To: toEmail,
         Bcc: 'tj@hospothreads.com',
-        Subject: emailSubject,
-        TemplateId: messageText,
+        TemplateId: '17217943',
         TemplateModel: {
-          Venue: venueName,
-          Amount: voucherAmount,
-          txn: voucherId
+          'Venue': venueName,
+          'Amount': voucherAmount,
+          'txn': voucherId
         }
       }
     };
