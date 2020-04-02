@@ -21,6 +21,7 @@ module.exports = ({
   messageHtml = 'no html message included',
   venueName = 'Mystery venue',
   voucherAmount = '$1,000,000',
+  voucherId = 'br0k3n',
 
   // amazon || postmark
   sendEngine = 'postmark'
