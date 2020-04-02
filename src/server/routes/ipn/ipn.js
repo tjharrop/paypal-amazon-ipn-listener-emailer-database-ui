@@ -18,7 +18,7 @@ const SUBJECT_FAIL = 'ipn promise chain rejected with: ';
 const IPN_RECEIVED_SUCCESS = 'ipn data received (PayPal)';
 const IPN_RECEIVED_SUCCESS_AMAZON = 'ipn data received (Amazon)';
 const TO_EMAIL = constants.defaultToEmail;
-const PAYPAL_PRODUCT_NAME_SNIPPET = 'Hospothreads voucher';
+const PAYPAL_PRODUCT_NAME_SNIPPET = 'voucher';
 const AMAZON_PRODUCT_NAME_SNIPPET = 'Hospothreads voucher';
 
 var amazonPayments = require('amazon-payments');
@@ -193,7 +193,7 @@ router.post('/paypal', function (req, res) {
           emailApi({
             toEmail: TO_EMAIL,
             fromEmail: FROM_EMAIL,
-            emailSubject: `(paypal) I sent a download link to ${data.payer_email} with subject "${CUSTOMER_SUBJECT}" and text included`,
+            emailSubject: `(paypal) I sent a voucher to ${data.payer_email} with subject "${CUSTOMER_SUBJECT}" and text included`,
             messageText: DOWNLOAD_INSTRUCTIONS_TEXT,
             messageHtml: DOWNLOAD_INSTRUCTIONS_HTML
           });
@@ -204,19 +204,22 @@ router.post('/paypal', function (req, res) {
             fromEmail: FROM_EMAIL,
             emailSubject: CUSTOMER_SUBJECT,
             messageText: DOWNLOAD_INSTRUCTIONS_TEXT,
-            messageHtml: DOWNLOAD_INSTRUCTIONS_HTML
+            messageHtml: DOWNLOAD_INSTRUCTIONS_HTML,
+            venueName: data.item_number,
+            voucherAmount: data.mc_gross,
+            voucherId: data.txn_id
           });
         } else {
 
           // send me notification that the following customer
           // will not be receiving a download link
-          emailApi({
-            toEmail: TO_EMAIL,
-            fromEmail: FROM_EMAIL,
-            emailSubject: `I will not be sending a download message to ${data.payer_email}`,
-            messageText: `I will not be sending a download message to ${data.payer_email} ${parseReqBody(data)}`,
-            messageHtml: `I will not be sending a download message to ${data.payer_email} ${parseReqBody(data, true)}`
-          });
+          // emailApi({
+          //   toEmail: TO_EMAIL,
+          //   fromEmail: FROM_EMAIL,
+          //   emailSubject: `I will not be sending a voucher to ${data.payer_email}`,
+          //   messageText: `I will not be sending a voucher to ${data.payer_email} ${parseReqBody(data)}`,
+          //   messageHtml: `I will not be sending a voucher to ${data.payer_email} ${parseReqBody(data, true)}`
+          // });
         }
       }
     })

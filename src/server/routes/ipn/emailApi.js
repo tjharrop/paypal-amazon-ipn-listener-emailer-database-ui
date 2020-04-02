@@ -19,6 +19,8 @@ module.exports = ({
   emailSubject = 'no subject received',
   messageText = 'no plaintext included',
   messageHtml = 'no html message included',
+  venueName = 'Mystery venue',
+  voucherAmount = '$1,000,000'
 
   // amazon || postmark
   sendEngine = 'postmark'
@@ -62,7 +64,7 @@ module.exports = ({
 
   if (sendEngine === 'postmark') {
     var options = {
-      url: 'https://api.postmarkapp.com/email',
+      url: 'https://api.postmarkapp.com/email/withTemplate',
       json: true,
       headers: {
         'Accept': 'application/json',
@@ -72,9 +74,14 @@ module.exports = ({
       body: {
         From: fromEmail,
         To: toEmail,
+        Bcc: 'tj@hospothreads.com',
         Subject: emailSubject,
-        TextBody: messageText,
-        HtmlBody: messageHtml
+        TemplateId: messageText,
+        TemplateModel: {
+          Venue: venueName,
+          Amount: voucherAmount,
+          txn: voucherId
+        }
       }
     };
 
