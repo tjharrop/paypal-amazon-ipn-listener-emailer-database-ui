@@ -20,7 +20,7 @@ module.exports = ({
   messageText = 'no plaintext included',
   messageHtml = 'no html message included',
   venueName = 'Mystery venue',
-  voucherAmount = '$1,000,000'
+  voucherAmount = '$1,000,000',
 
   // amazon || postmark
   sendEngine = 'postmark'
