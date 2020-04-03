@@ -208,7 +208,7 @@ router.post('/paypal', function (req, res) {
             venueName: data.item_number,
             voucherAmount: data.mc_gross,
             voucherId: vouchId,
-            customerName: address_name
+            customerName: data.address_name
           });
 
           // send the customer their download link
@@ -219,7 +219,7 @@ router.post('/paypal', function (req, res) {
             venueName: data.item_number,
             voucherAmount: data.mc_gross,
             voucherId: vouchId,
-            customerName: address_name
+            customerName: data.address_name
           });
         } else {
 
