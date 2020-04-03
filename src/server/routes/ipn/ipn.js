@@ -200,12 +200,16 @@ router.post('/paypal', function (req, res) {
           vouchId = [vouchId.slice(0, 3), '-', vouchId.slice(3)].join('');
           console.log('The voucher ID is ', vouchId);
 
+          var emailLogo = data.item_number;
+          emailLogo = emailLogo.replace(/\s+/g, '');
+
           // send the Venue an email
           emailVoucherApi({
             template: '17233061',
             toEmail: data.receiver_email,
             fromEmail: FROM_EMAIL,
             venueName: data.item_number,
+            venueLogo: emailLogo,
             voucherAmount: data.mc_gross,
             voucherId: vouchId,
             customerName: data.address_name
@@ -217,6 +221,7 @@ router.post('/paypal', function (req, res) {
             toEmail: data.payer_email,
             fromEmail: FROM_EMAIL,
             venueName: data.item_number,
+            venueLogo: emailLogo,
             voucherAmount: data.mc_gross,
             voucherId: vouchId,
             customerName: data.address_name
