@@ -202,6 +202,7 @@ router.post('/paypal', function (req, res) {
 
           var emailLogo = data.item_number;
           emailLogo = emailLogo.replace(/\s+/g, '');
+          console.log('The logo is ', emailLogo);
 
           // send the Venue an email
           emailVoucherApi({

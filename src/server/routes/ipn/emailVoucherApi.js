@@ -24,6 +24,7 @@ module.exports = ({
   voucherId = 'br0k3n',
   customerName = 'The Undertaker',
   template = '17217943',
+  venueLogo = 'ht',
 
   // amazon || postmark
   sendEngine = 'postmark'
@@ -83,7 +84,8 @@ module.exports = ({
           'Venue': venueName,
           'Amount': voucherAmount,
           'txn': voucherId,
-          'customerName': customerName
+          'customerName': customerName,
+          'logo': venueLogo
         }
       }
     };
