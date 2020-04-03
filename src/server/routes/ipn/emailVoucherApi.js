@@ -22,6 +22,8 @@ module.exports = ({
   venueName = 'Mystery venue',
   voucherAmount = '1,000,000',
   voucherId = 'br0k3n',
+  customerName = 'The Undertaker',
+  template = '17217943',
 
   // amazon || postmark
   sendEngine = 'postmark'
@@ -76,11 +78,12 @@ module.exports = ({
         From: fromEmail,
         To: toEmail,
         Bcc: 'tj@hospothreads.com',
-        TemplateId: '17217943',
+        TemplateId: template,
         TemplateModel: {
           'Venue': venueName,
           'Amount': voucherAmount,
-          'txn': voucherId
+          'txn': voucherId,
+          'customerName': customerName
         }
       }
     };

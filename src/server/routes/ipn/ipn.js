@@ -193,25 +193,33 @@ router.post('/paypal', function (req, res) {
           console.log('I am sending the email to ', data.payer_email);
           console.log('For their voucher from ', data.item_number);
           console.log('For  ', data.mc_gross);
-          // send me an exact copy of the customer download email
-          emailApi({
-            toEmail: TO_EMAIL,
+
+          var vouchId = data.txn_id;
+          vouchId = vouchId.substr(vouchId.length - 9);
+          vouchId = [vouchId.slice(0, 6), '-', vouchId.slice(6)].join('');
+          vouchId = [vouchId.slice(0, 3), '-', vouchId.slice(3)].join('');
+          console.log('The voucher ID is ', vouchId);
+
+          // send the Venue an email
+          emailVoucherApi({
+            template: '17233061',
+            toEmail: data.receiver_email,
             fromEmail: FROM_EMAIL,
-            emailSubject: `(paypal) I sent a voucher to ${data.payer_email} with subject "${CUSTOMER_SUBJECT}" and text included`,
-            messageText: DOWNLOAD_INSTRUCTIONS_TEXT,
-            messageHtml: DOWNLOAD_INSTRUCTIONS_HTML
+            venueName: data.item_number,
+            voucherAmount: data.mc_gross,
+            voucherId: vouchId,
+            customerName: address_name
           });
 
           // send the customer their download link
           emailVoucherApi({
+            template: '17217943',
             toEmail: data.payer_email,
             fromEmail: FROM_EMAIL,
-            emailSubject: CUSTOMER_SUBJECT,
-            messageText: DOWNLOAD_INSTRUCTIONS_TEXT,
-            messageHtml: DOWNLOAD_INSTRUCTIONS_HTML,
             venueName: data.item_number,
             voucherAmount: data.mc_gross,
-            voucherId: data.txn_id
+            voucherId: vouchId,
+            customerName: address_name
           });
         } else {
 
